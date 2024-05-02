@@ -1,81 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora</title>
+<h1>Calculadora</h1>
 
-    <style>
-        .calculadora{
-            margin-top: 100px;
-            text-align: center;
-        }
-
-        body {
-            background-color:#4682B4;
-            font-family:sans-serif;
-            
-        }
-        h1 {
-            margin: 10;
-            padding: 20px 0;
-            color: #00539F;
-            text-shadow: 3px 3px 1px black;
-            color: azure;
-            font-size: 90px;
-            text-align: center;
-        }
-        button {
-            padding:15px 10px;
-            font-size:18px;
-            width: 100px ;
-            color: black;
-        }
-        input{
-            width: 400px;
-            font-size: 25px;
-            margin-bottom: 10px;
-        }
-
-        .flex-container {
-    display: flex;
-  }
-
-  .flex-container{
-    justify-content: center;
-
-  }
-
-    </style>
-</head>
-<body>
-
-    <h1>Calculadora</h1>
-    <div class="calculadora">
-    <form>
-        <input class="res-favoravel" id="num1" placeholder="Número de Resultados Favoráveis" type="text"></input> <br>
-        <input class="res-possiveis" id="num2" placeholder="Número de Resultados Possíveis" type="text"></input>
-        <br><br>  
-<div class="button">
-        <button type="button" id="divisao" onclick="opercacao('/')">Dividir</button>
-        <br><br>   
-        <input class="res-final"  type="text" placeholder="P(A)" disabled id="resposta"></input>
+<div class="calculadora">
+    <input class="res-favoravel" placeholder="Número de Resultados Favoráveis" [(ngModel)]="num1" type="text"> <br>
+    <input class="res-possiveis" placeholder="Número de Resultados Possíveis" [(ngModel)]="num2" type="text">
+    <br><br>
+    <div class="button">
+        <button type="button" (click)="operacao()">Dividir</button>
     </div>
-<br><br>  
-</form>
+    <br><br>
+    <input class="res-final" type="text" placeholder="P(A)" [value]="resposta" disabled>
 </div>
-    <script>
-        function opercacao(op){        
-            var numero1 = parseFloat(document.getElementById("num1").value);
-            var numero2 = parseFloat(document.getElementById("num2").value);
-            var resposta = document.getElementById("resposta");
-            var resposta_final;
-            var resposta_final = numero1 / numero2;
-            resposta.value = resposta_final;
-
-        }
-
-    </script>
-</body>
-</html>
