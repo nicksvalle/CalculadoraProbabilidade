@@ -10,3 +10,24 @@
     <br><br>
     <input class="res-final" type="text" placeholder="P(A)" [value]="resposta" disabled>
 </div>
+
+<form>
+    <div class="tabela">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Resultado Favorável</th>
+            <th>Resultado Possível</th>
+            <th>Resultado Final</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let calculo of historico">
+              <td>{{ calculo.num1 }}</td>
+              <td>{{ calculo.num2 }}</td>
+              <td>{{ calculo.resposta }}</td>
+            </tr>
+          </tbody>         
+      </table>
+    </div>
+  </form>
