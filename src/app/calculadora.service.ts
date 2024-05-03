@@ -9,7 +9,7 @@ import { Calculadora } from './calculadora';
 })
 export class CalculadoraService {
 
-  url = 'http://localhost:8080/calculator';
+  url = 'http://localhost:8080/calculator/';
 
   constructor(private http: HttpClient) { }
 
@@ -18,7 +18,7 @@ export class CalculadoraService {
   }
 
   save(calculadora: Calculadora): Observable<Calculadora> {
-  return this.http.post<Calculadora>(`${this.url}/`, calculadora); 
+  return this.http.post<Calculadora>(this.url, calculadora); 
   }
 
 }

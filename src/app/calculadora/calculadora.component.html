@@ -1,33 +1,49 @@
-<h1>Calculadora</h1>
-
-<div class="calculadora">
-    <input class="res-favoravel" placeholder="Número de Resultados Favoráveis" [(ngModel)]="num1" type="text"> <br>
-    <input class="res-possiveis" placeholder="Número de Resultados Possíveis" [(ngModel)]="num2" type="text">
-    <br><br>
-    <div class="button">
-        <button type="button" (click)="operacao()">Dividir</button>
+<form [formGroup]="formGroupHistorico">
+  <div class="container">
+    <h1 class="display-4">Calculadora</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label for="res1" class="form-label">Resultados Favoráveis:</label>
+                <input type="text" formControlName="res1" class="form-control" id="res1" placeholder="Resultados Favoráveis">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label for="res2" class="form-label">Resultados Possíveis:</label>
+                <input type="text" formControlName="res2" class="form-control" id="res2" placeholder="Resultados Possíveis">
+            </div>
+        </div>
     </div>
-    <br><br>
-    <input class="res-final" type="text" placeholder="P(A)" [value]="resposta" disabled>
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-primary" (click)="operacao(); save()">Calcular</button>
+        </div>
+    </div>
 </div>
+</form>
 
-<form>
-    <div class="tabela">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Resultado Favorável</th>
-            <th>Resultado Possível</th>
-            <th>Resultado Final</th>
-          </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let calculo of historico">
-              <td>{{ calculo.num1 }}</td>
-              <td>{{ calculo.num2 }}</td>
-              <td>{{ calculo.resposta }}</td>
-            </tr>
-          </tbody>         
-      </table>
-    </div>
-  </form>
+<div class="container mt-5">
+  <div class="row">
+      <div class="col-md-12">
+          <div class="table-responsive">
+              <table class="table table-striped">
+                  <thead>
+                      <tr>
+                          <th scope="col">Resultado Favorável</th>
+                          <th scope="col">Resultado Possível</th>
+                          <th scope="col">Resultado Final</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr *ngFor="let calculo of calculadora">
+                          <td>{{ calculo.res1 }}</td>
+                          <td>{{ calculo.res2 }}</td>
+                          <td>{{ calculo.result }}</td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
+</div>
