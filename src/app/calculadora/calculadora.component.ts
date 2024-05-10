@@ -11,8 +11,11 @@ import { Calculadora } from '../calculadora';
 export class CalculadoraComponent {
   res1: number = 0;
   res2: number = 0;
+  res3: number = 0; // Adicionando res3 para a probabilidade composta
+  res4: number = 0; // Adicionando res4 para a probabilidade composta
   temporario: number = 0;
-  result: string = "";
+  resultSimples: string = "";
+  resultComposta: string = ""; // Resultado para a probabilidade composta
   calculadora: Calculadora[] = [];
   formGroupHistorico: FormGroup;
 
@@ -21,7 +24,10 @@ export class CalculadoraComponent {
       id: [''],
       res1: [0],
       res2: [0],
-      result: ['']
+      res3: [0],
+      res4: [0],
+      resultSimples: [''],
+      resultComposta: ['']
     });
   }
 
@@ -35,17 +41,27 @@ export class CalculadoraComponent {
     });
   }
 
-  operacao() {
-    // Converter os valores de res1 e res2 para números
+  simples() {
     const res1Number = parseFloat(this.formGroupHistorico.value.res1);
     const res2Number = parseFloat(this.formGroupHistorico.value.res2);
     
-    // Verificar se os valores são válidos antes de realizar a divisão
     if (!isNaN(res1Number) && !isNaN(res2Number) && res2Number !== 0) {
       this.temporario = res1Number / res2Number;
-      this.result = this.temporario.toFixed(2);
+      this.resultSimples = this.temporario.toFixed(2);
     } else {
-      this.result = "NaN";
+      this.resultSimples = "NaN";
+    }
+  }
+
+  composta() {
+    const res3Number = parseFloat(this.formGroupHistorico.value.res3);
+    const res4Number = parseFloat(this.formGroupHistorico.value.res4);
+  
+    if (!isNaN(res3Number) && !isNaN(res4Number)) {
+      const probabilidadeComposta = (res3Number / res4Number) * 100;
+      this.resultComposta = probabilidadeComposta.toFixed(2);
+    } else {
+      this.resultComposta = "NaN";
     }
   }
 
@@ -53,13 +69,14 @@ export class CalculadoraComponent {
     if (this.formGroupHistorico.valid) {
       const result = {
         ...this.formGroupHistorico.value,
-        result: this.result
+        resultSimples: this.resultSimples,
+        resultComposta: this.resultComposta
       };
       this.calculadoraService.save(result).subscribe({
         next: data => {
           this.calculadora.push(data);
-          this.loadResult(); // Recarrega os dados após salvar
-          this.formGroupHistorico.reset(); // Limpa o formulário
+          this.loadResult();
+          this.formGroupHistorico.reset();
         }
       });
     }
