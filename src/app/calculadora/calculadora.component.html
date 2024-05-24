@@ -7,8 +7,8 @@
       <div class="row">
         <div class="col-md-12">
           <div class="mb-3">
-            <label for="numInput" class="form-label">Números (separe por vírgula):</label>
-            <input type="text" formControlName="numInput" class="form-control" id="numInput" placeholder="Insira os números separados por vírgula">
+            <label for="numeros" class="form-label">Números (separe por vírgula):</label>
+            <input type="text" formControlName="numeros" class="form-control" id="numeros" placeholder="Insira os números separados por vírgula">
           </div>
         </div>
       </div>
@@ -30,6 +30,7 @@
           <table class="table table-striped">
             <thead>
               <tr>
+                <th scope="col">Números</th>
                 <th scope="col">Média</th>
                 <th scope="col">Variância</th>
                 <th scope="col">Desvio Padrão</th>
@@ -37,6 +38,7 @@
             </thead>
             <tbody>
               <tr *ngFor="let calculo of calculadora">
+                <td>{{ calculo.numeros }}</td>
                 <td>{{ calculo.media }}</td>
                 <td>{{ calculo.variancia }}</td>
                 <td>{{ calculo.desvioPadrao }}</td>

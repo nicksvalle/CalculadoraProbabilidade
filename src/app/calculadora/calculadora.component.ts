@@ -19,7 +19,7 @@ export class CalculadoraComponent implements OnInit {
   constructor(private calculadoraService: CalculadoraService, private formBuilder: FormBuilder) {
     this.formGroupHistorico = formBuilder.group({
       id: [''],
-      numInput: [''],
+      numeros: [''],
     });
   }
 
@@ -34,7 +34,7 @@ export class CalculadoraComponent implements OnInit {
   }
 
   calcularMedia() {
-    const numerosArray: number[] = this.formGroupHistorico.value.numInput.split(',').map((num: string) => parseFloat(num));
+    const numerosArray: number[] = this.formGroupHistorico.value.numeros.split(',').map((num: string) => parseFloat(num));
     const numerosValidos: number[] = numerosArray.filter((num: number) => !isNaN(num));
     if (numerosValidos.length > 0) {
       this.media = numerosValidos.reduce((acc, val) => acc + val, 0) / numerosValidos.length;
@@ -44,7 +44,7 @@ export class CalculadoraComponent implements OnInit {
   }
 
   calcularVariancia() {
-    const numerosArray: number[] = this.formGroupHistorico.value.numInput.split(',').map((num: string) => parseFloat(num));
+    const numerosArray: number[] = this.formGroupHistorico.value.numeros.split(',').map((num: string) => parseFloat(num));
     const numerosValidos: number[] = numerosArray.filter((num: number) => !isNaN(num));
     if (numerosValidos.length > 0) {
       const somaQuadrados: number = numerosValidos.reduce((acc, val) => acc + val ** 2, 0);
@@ -69,9 +69,12 @@ export class CalculadoraComponent implements OnInit {
       this.calcularVariancia();
       this.calcularDesvioPadrao();
   
+      // Atualiza this.numeros com o valor do formulário
+      this.numeros = this.formGroupHistorico.value.numeros;
+  
       const result = {
-        ...this.formGroupHistorico.value, // Include all form fields
-        numInput: this.formGroupHistorico.value.numInput, // Add numInput to the result object
+        ...this.formGroupHistorico.value, // Inclui todos os campos do formulário
+        numeros: this.numeros, // Adiciona this.numeros ao objeto resultante
         media: this.media,
         variancia: this.variancia,
         desvioPadrao: this.desvioPadrao
@@ -86,6 +89,7 @@ export class CalculadoraComponent implements OnInit {
       });
     }
   }
+  
   
   
 }
