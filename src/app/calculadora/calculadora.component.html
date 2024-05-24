@@ -1,16 +1,50 @@
 <div class="container mt-5">
-    <h2>Calculadora de Estatísticas</h2>
-    <form [formGroup]="formGroupHistorico" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="dataInput">Insira os dados (separados por vírgula)</label>
-        <input type="text" class="form-control" formControlName="data" id="dataInput">
+  <h1>Calculadora de Estatística</h1>
+  
+  <form [formGroup]="formGroupHistorico">
+    <div class="container">
+      <h1 class="display-4">Calculadora</h1>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="mb-3">
+            <label for="numInput" class="form-label">Números (separe por vírgula):</label>
+            <input type="text" formControlName="numInput" class="form-control" id="numInput" placeholder="Insira os números separados por vírgula">
+          </div>
+        </div>
       </div>
-      <button type="submit" class="btn btn-primary">Calcular</button>
-    </form>
-    <div *ngIf="result">
-      <h3>Resultados:</h3>
-      <p>Média: {{ result.media }}</p>
-      <p>Variância: {{ result.variancia }}</p>
-      <p>Desvio Padrão: {{ result.desvioPadrao }}</p>
+      <div class="row">
+        <div class="col-md-12">
+          <button type="button" class="btn btn-primary" (click)="calcularMedia(); calcularVariancia(); calcularDesvioPadrao(); save()">Calcular</button>
+        </div>
+      </div>
+      <br><br>
+      <input class="res-final" type="text" placeholder="P(A)" [value]="media" disabled>
+    </div>
+  </form>
+  
+  <!-- Tabela de Resultados -->
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Média</th>
+                <th scope="col">Variância</th>
+                <th scope="col">Desvio Padrão</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let calculo of calculadora">
+                <td>{{ calculo.media }}</td>
+                <td>{{ calculo.variancia }}</td>
+                <td>{{ calculo.desvioPadrao }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
+</div>

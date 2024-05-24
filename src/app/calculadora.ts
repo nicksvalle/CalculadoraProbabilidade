@@ -1,9 +1,8 @@
 export interface Calculadora {
     id: number;
-    num1: number;
-    num2: number;
+    numeros : string;
     media: number;
     variancia: number;
-    desvioPadrao: string;
+    desvioPadrao: number;
     result: string;
 }
