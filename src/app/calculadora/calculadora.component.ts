@@ -9,25 +9,20 @@ import { Calculadora } from '../calculadora';
   styleUrls: ['./calculadora.component.css']
 })
 export class CalculadoraComponent {
-  res1: number = 0;
-  res2: number = 0;
-  res3: number = 0; // Adicionando res3 para a probabilidade composta
-  res4: number = 0; // Adicionando res4 para a probabilidade composta
-  temporario: number = 0;
-  resultSimples: string = "";
-  resultComposta: string = ""; // Resultado para a probabilidade composta
+  num1: number = 0;
+  num2: number = 0;
+  media: number = 0;
+  variancia: number = 0;
+  desvioPadrao: number = 0;
   calculadora: Calculadora[] = [];
   formGroupHistorico: FormGroup;
 
   constructor(private calculadoraService: CalculadoraService, private formBuilder: FormBuilder) {
     this.formGroupHistorico = formBuilder.group({
-      id: [''],
       res1: [0],
       res2: [0],
       res3: [0],
       res4: [0],
-      resultSimples: [''],
-      resultComposta: ['']
     });
   }
 
@@ -41,36 +36,47 @@ export class CalculadoraComponent {
     });
   }
 
-  simples() {
+  calcularMedia() {
     const res1Number = parseFloat(this.formGroupHistorico.value.res1);
     const res2Number = parseFloat(this.formGroupHistorico.value.res2);
     
-    if (!isNaN(res1Number) && !isNaN(res2Number) && res2Number !== 0) {
-      this.temporario = res1Number / res2Number;
-      this.resultSimples = this.temporario.toFixed(2);
+    if (!isNaN(res1Number) && !isNaN(res2Number)) {
+      this.media = (res1Number + res2Number) / 2;
     } else {
-      this.resultSimples = "NaN";
+      this.media = NaN;
     }
   }
 
-  composta() {
+  calcularVariancia() {
     const res3Number = parseFloat(this.formGroupHistorico.value.res3);
     const res4Number = parseFloat(this.formGroupHistorico.value.res4);
   
     if (!isNaN(res3Number) && !isNaN(res4Number)) {
-      const probabilidadeComposta = (res3Number / res4Number) * 100;
-      this.resultComposta = probabilidadeComposta.toFixed(2);
+      this.variancia = ((res3Number - this.media) ** 2 + (res4Number - this.media) ** 2) / 2;
     } else {
-      this.resultComposta = "NaN";
+      this.variancia = NaN;
+    }
+  }
+
+  calcularDesvioPadrao(){
+    if (!isNaN(this.variancia)) {
+      this.desvioPadrao = Math.sqrt(this.variancia);
+    } else {
+      this.desvioPadrao = NaN;
     }
   }
 
   save() {
     if (this.formGroupHistorico.valid) {
+      this.calcularMedia();
+      this.calcularVariancia();
+      this.calcularDesvioPadrao();
+
       const result = {
         ...this.formGroupHistorico.value,
-        resultSimples: this.resultSimples,
-        resultComposta: this.resultComposta
+        media: this.media,
+        variancia: this.variancia,
+        desvioPadrao: this.desvioPadrao
       };
       this.calculadoraService.save(result).subscribe({
         next: data => {
